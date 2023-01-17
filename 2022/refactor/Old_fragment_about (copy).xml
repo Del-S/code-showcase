@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="aboutViewModel"
+            type="cz.csob.smartbanking.addon.about.presentation.viewmodel.AboutViewModel"/>
+
+        <variable
+            name="easterEggViewModel"
+            type="cz.csob.smartbanking.codebase.presentation.feature.easteregg.viewmodel.EasterEggViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/toolbar_elevation_scene"
+        tools:context="cz.csob.smartbanking.addon.about.presentation.view.AboutFragment">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/SmartBankingTheme.Toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/SmartBankingTheme.TextAppearance.Toolbar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/other_about_aplication_screen_name"/>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/easterEggAnimation"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                android:scaleType="centerCrop"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_bind="@{easterEggViewModel.easterEgg}"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="true"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintVertical_bias="0.0">
+
+            <LinearLayout
+                android:id="@+id/innerOnboardingConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_vertical_spacing"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgLogo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_vertical_spacing_double"
+                        android:clickable="true"
+                        android:contentDescription="@string/other_about_aplication_header"
+                        android:focusable="true"
+                        android:onClick="@{() -> easterEggViewModel.enableAboutEasterEgg()}"
+                        android:src="@drawable/splash_screen"/>
+
+                    <TextView
+                        android:id="@+id/textViewTitleSmartbanking"
+                        style="@style/SmartBankingTheme.TextAppearance.Header.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_vertical_spacing_double"
+                        android:gravity="center_horizontal"
+                        bind:appNameAbout="@{@string/other_about_aplication_header}"
+                        tools:text="CSOB Smart"/>
+
+                    <TextView
+                        android:id="@+id/textViewVersionTitle"
+                        style="@style/SmartBankingTheme.TextAppearance.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_vertical_spacing"
+                        android:text="@string/other_about_aplication_text_version"/>
+
+                    <TextView
+                        android:id="@+id/textViewVersionValue"
+                        style="@style/SmartBankingTheme.TextAppearance.Regular.Tint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        app:setVersion="@{aboutViewModel}"
+                        tools:text="12.124.2"/>
+
+                    <TextView
+                        android:id="@+id/textViewVersionMepiSdk"
+                        style="@style/SmartBankingTheme.TextAppearance.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/other_about_application_text_mepi_sdk_version"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/textViewVersionMepiSdkValue"
+                        style="@style/SmartBankingTheme.TextAppearance.Regular.Tint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@{aboutViewModel.mepiSdkVersion}"
+                        android:visibility="gone"
+                        tools:text="12.124.2"
+                        tools:visibility="visible"/>
+
+                </LinearLayout>
+
+                <!-- TODO: rework to recycler view -->
+                <TextView
+                    android:id="@+id/textViewTitlePersonalData"
+                    style="@style/SmartBankingTheme.TextAppearance.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_vertical_spacing_double"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="@{aboutViewModel::onPersonalDataClick}"
+                    android:paddingStart="@dimen/default_texts_margin"
+                    android:paddingTop="@dimen/default_vertical_spacing"
+                    android:paddingEnd="@dimen/default_texts_margin"
+                    android:paddingBottom="@dimen/default_vertical_spacing"
+                    android:text="@string/other_about_aplication_button_personal_information"/>
+
+                <View
+                    android:id="@+id/viewSeparatorOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/default_texts_margin"
+                    android:background="@color/separator_color"/>
+
+                <TextView
+                    android:id="@+id/textViewTitleBusiness"
+                    style="@style/SmartBankingTheme.TextAppearance.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="@{aboutViewModel::onBusinessConditionClick}"
+                    android:paddingStart="@dimen/default_texts_margin"
+                    android:paddingTop="@dimen/default_vertical_spacing"
+                    android:paddingEnd="@dimen/default_texts_margin"
+                    android:paddingBottom="@dimen/default_vertical_spacing"
+                    android:text="@string/other_about_aplication_button_terms_of_trade"/>
+
+                <View
+                    android:id="@+id/viewSeparatorTwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/default_texts_margin"
+                    android:background="@color/separator_color"/>
+
+                <TextView
+                    android:id="@+id/textViewTitleCookies"
+                    style="@style/SmartBankingTheme.TextAppearance.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="@{aboutViewModel::onCookiesConditionsClick}"
+                    android:paddingStart="@dimen/default_texts_margin"
+                    android:paddingTop="@dimen/default_vertical_spacing"
+                    android:paddingEnd="@dimen/default_texts_margin"
+                    android:paddingBottom="@dimen/default_vertical_spacing"
+                    android:text="@string/other_about_aplication_button_cookies"/>
+
+                <View
+                    android:id="@+id/viewSeparatorThree"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/default_texts_margin"
+                    android:background="@color/separator_color"/>
+
+                <TextView
+                    android:id="@+id/textTitleImportantInformation"
+                    style="@style/SmartBankingTheme.TextAppearance.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="@{aboutViewModel::onImportantInformationClick}"
+                    android:paddingStart="@dimen/default_texts_margin"
+                    android:paddingTop="@dimen/default_vertical_spacing"
+                    android:paddingEnd="@dimen/default_texts_margin"
+                    android:paddingBottom="@dimen/default_vertical_spacing"
+                    android:text="@string/other_about_aplication_button_ippid_client_info"
+                    android:visibility="@{aboutViewModel.showAppStartImportantInfo ? View.VISIBLE : View.GONE}"/>
+
+                <View
+                    android:id="@+id/viewSeparatorFive"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/default_texts_margin"
+                    android:background="@color/separator_color"
+                    android:visibility="@{aboutViewModel.showAppStartImportantInfo ? View.VISIBLE : View.GONE}"/>
+
+                <TextView
+                    android:id="@+id/textViewTitleOnboarding"
+                    style="@style/SmartBankingTheme.TextAppearance.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="@{aboutViewModel::onOnboardingClick}"
+                    android:paddingStart="@dimen/default_texts_margin"
+                    android:paddingTop="@dimen/default_vertical_spacing"
+                    android:paddingEnd="@dimen/default_texts_margin"
+                    android:paddingBottom="@dimen/default_vertical_spacing"
+                    android:text="@string/other_about_application_text_onboarding_link"
+                    android:visibility="@{aboutViewModel.isOnboardingActive ? View.VISIBLE : View.GONE}"/>
+
+                <View
+                    android:id="@+id/viewSeparatorFour"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/default_texts_margin"
+                    android:background="@color/separator_color"
+                    android:visibility="@{aboutViewModel.isOnboardingActive ? View.VISIBLE : View.GONE}"/>
+
+                <TextView
+                    android:id="@+id/textTitleRestApp"
+                    style="@style/SmartBankingTheme.TextAppearance.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?selectableItemBackground"
+                    android:paddingStart="@dimen/default_texts_margin"
+                    android:paddingTop="@dimen/default_vertical_spacing"
+                    android:paddingEnd="@dimen/default_texts_margin"
+                    android:paddingBottom="@dimen/default_vertical_spacing"
+                    android:text="@string/other_button_set_default_app_settings"/>
+
+                <View
+                    android:id="@+id/viewSeparatorSix"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/default_texts_margin"
+                    android:layout_marginBottom="@dimen/default_vertical_spacing"
+                    android:background="@color/separator_color"/>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+</layout>
