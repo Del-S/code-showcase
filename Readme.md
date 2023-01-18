@@ -20,3 +20,8 @@ Some identified or solved issues:
 - https://stackoverflow.com/a/52456667/10169723
 - https://stackoverflow.com/a/52536617/10169723
 - https://stackoverflow.com/a/53817654/10169723
+
+Uni project:
+- Android application that receives signal strength from Bluetooth (iBeacons) and WiFi networks to locate user inside building.
+  - Application with wear app: https://github.com/Del-S/WearFingerprint.
+  - Support server: https://github.com/Del-S/WearFingerprintServer.
